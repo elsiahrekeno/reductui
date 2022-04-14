@@ -40,10 +40,10 @@ end
 
 
 function Lib.ToggleUI()
-    if CoreGui["Libary"].Enabled then
+    if CoreGui["Library"].Enabled then
         CoreGui["Libary"].Enabled = false 
     else
-        CoreGui["Libary"].Enabled = true 
+        CoreGui["Library"].Enabled = true 
     end
 end
 function Identifier()
@@ -580,7 +580,7 @@ Close.MouseButton1Click:Connect(function()
                 local callback = settings.Callback or function() end
                 local dropfunctions = {}
                 if not typeof(Title) == "string" then Title = "New dropdown" end
-                
+                local opened = false 
 
         
         local dropFrame = Instance.new("Frame")
@@ -691,9 +691,9 @@ Close.MouseButton1Click:Connect(function()
         UIPadding.PaddingLeft = UDim.new(0, 6)
 
         dropItem.MouseButton1Click:Connect(function()
-            TweenService:Create(dropFrame,TweenInfo.new(.25),{Size = UDim2.new(0, 428, 0, 39)}):Play()
+            opened = false
+            TweenService:Create(dropFrame,TweenInfo.new(.1),{Size = UDim2.new(0, 428, 0, 39)}):Play()
             DropText.Text =  Title .. " - " .. dropItem.Text
-            pcall(callback,dropItem.Text)
             local c = Sample:Clone()
             c.Parent = dropItem
             local x, y = (ms.X - c.AbsolutePosition.X), (ms.Y - c.AbsolutePosition.Y)
@@ -709,7 +709,9 @@ Close.MouseButton1Click:Connect(function()
                 c.ImageTransparency = c.ImageTransparency + 0.05
                 wait(len / 12)
             end
-            c:Destroy()
+            c:Destroy()      
+            pcall(callback,dropItem.Text)
+         
         end)
 
         dropItem.MouseEnter:Connect(function(x, y)
@@ -730,12 +732,29 @@ Close.MouseButton1Click:Connect(function()
         for _,v in pairs(items) do
             newItem(v)
         end
-        local opened = false 
+    
         dropOpen.MouseButton1Click:Connect(function()
             opened = not opened 
-            
-            local Debouce = false 
-             if opened == true then
+                if opened == true then
+                 TweenService:Create(dropFrame,TweenInfo.new(.1),{Size =  UDim2.new(0, 428, 0, 39 + UIListLayout.AbsoluteContentSize.Y - 39)}):Play()
+                 local c = Sample:Clone()
+                 c.Parent = dropOpen
+                 local x, y = (ms.X - c.AbsolutePosition.X), (ms.Y - c.AbsolutePosition.Y)
+                 c.Position = UDim2.new(0, x, 0, y)
+                 local len, size = 0.35, nil
+                 if dropOpen.AbsoluteSize.X >= dropOpen.AbsoluteSize.Y then
+                     size = (dropOpen.AbsoluteSize.X * 1.5)
+                 else
+                     size = (dropOpen.AbsoluteSize.Y * 1.5)
+                 end
+                 c:TweenSizeAndPosition(UDim2.new(0, size, 0, size), UDim2.new(0.5, (-size / 2), 0.5, (-size / 2)), 'Out', 'Quad', len, true, nil)
+                 for i = 1, 10 do
+                     c.ImageTransparency = c.ImageTransparency + 0.05
+                     wait(len / 12)
+                 end
+                 c:Destroy()
+                 elseif opened == false then
+                TweenService:Create(dropFrame,TweenInfo.new(.1),{Size =  UDim2.new(0, 428, 0, 39)}):Play()
                 local c = Sample:Clone()
                 c.Parent = dropOpen
                 local x, y = (ms.X - c.AbsolutePosition.X), (ms.Y - c.AbsolutePosition.Y)
@@ -752,27 +771,6 @@ Close.MouseButton1Click:Connect(function()
                     wait(len / 12)
                 end
                 c:Destroy()
-
-                 TweenService:Create(dropFrame,TweenInfo.new(.15),{Size =  UDim2.new(0, 428, 0, 39 + UIListLayout.AbsoluteContentSize.Y - 39)}):Play()
-             elseif opened == false then
-                local c = Sample:Clone()
-                c.Parent = dropOpen
-                local x, y = (ms.X - c.AbsolutePosition.X), (ms.Y - c.AbsolutePosition.Y)
-                c.Position = UDim2.new(0, x, 0, y)
-                local len, size = 0.35, nil
-                if dropOpen.AbsoluteSize.X >= dropOpen.AbsoluteSize.Y then
-                    size = (dropOpen.AbsoluteSize.X * 1.5)
-                else
-                    size = (dropOpen.AbsoluteSize.Y * 1.5)
-                end
-                c:TweenSizeAndPosition(UDim2.new(0, size, 0, size), UDim2.new(0.5, (-size / 2), 0.5, (-size / 2)), 'Out', 'Quad', len, true, nil)
-                for i = 1, 10 do
-                    c.ImageTransparency = c.ImageTransparency + 0.05
-                    wait(len / 12)
-                end
-                c:Destroy()
-                TweenService:Create(dropFrame,TweenInfo.new(.15),{Size =  UDim2.new(0, 428, 0, 39)}):Play()
-        
              end
         end)
     end
@@ -917,7 +915,6 @@ Close.MouseButton1Click:Connect(function()
                     if not typeof(Title) == "string" then Title = "New Keybind" end 
                     local Callback = settings.Callback or function() end
                     local oldKey = settings.KeyCode.Name or Enum.KeyCode.F.Name
-
             local Keybind = Instance.new("Frame")
             local UICorner = Instance.new("UICorner")
             local KeybindText = Instance.new("TextLabel")
@@ -958,7 +955,7 @@ Close.MouseButton1Click:Connect(function()
             Keybutton.Position = UDim2.new(0.799, 0,0.179, 0)
             Keybutton.Size = UDim2.new(0, 78,0, 25)
             Keybutton.Font = Enum.Font.GothamSemibold
-            Keybutton.Text = "Right Shift"
+            Keybutton.Text = tostring(oldKey)
             Keybutton.TextColor3 = Color3.fromRGB(255, 255, 255)
             Keybutton.TextScaled = true
             Keybutton.TextSize = 12.000
@@ -1006,7 +1003,6 @@ Close.MouseButton1Click:Connect(function()
             local UITextSizeConstraint_2 = Instance.new("UITextSizeConstraint")
             local UIPadding = Instance.new("UIPadding")
 
-            --Properties:
 
             Textbox.Name = "Textbox"
             Textbox.Parent = Page
@@ -1071,4 +1067,3 @@ Close.MouseButton1Click:Connect(function()
     return Inside
 end
 return Lib
---tb fixed
