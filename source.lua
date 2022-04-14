@@ -1009,7 +1009,7 @@ Close.MouseButton1Click:Connect(function()
             --Properties:
 
             Textbox.Name = "Textbox"
-            Textbox.Parent = game.StarterGui.Library.MotherFrame.Page
+            Textbox.Parent = Page
             Textbox.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
             Textbox.Position = UDim2.new(-0.0088888891, 0, 0.00657894742, 0)
             Textbox.Size = UDim2.new(0, 428, 0, 39)
