@@ -420,6 +420,13 @@ Close.MouseButton1Click:Connect(function()
            Button.MouseLeave:Connect(function(x, y)
             TweenService:Create(Button,TweenInfo.new(.25),{BackgroundColor3 = Color3.fromRGB(31,31,31)}):Play()               
                 end)
+
+                function ButtonFunctions.Update(settings)
+                    settings = settings or {}
+                    local Title = settings.Title or "Updated Button"
+                    Button.Text = tostring(Title) 
+                end
+                return ButtonFunctions
             end
 
             function CatElements.Toggle(settings)
@@ -428,7 +435,7 @@ Close.MouseButton1Click:Connect(function()
                 local Default = settings.Default or false 
                 local Callback = settings.Callback or function () end
                 if not typeof(Title) == "string" then Title = "New Toggle" end 
-
+                local togglefunctions = {}
             local Toggle = Instance.new("Frame")
             local UICorner = Instance.new("UICorner")
             local ToggleText = Instance.new("TextLabel")
@@ -571,7 +578,12 @@ Close.MouseButton1Click:Connect(function()
                Toggle.MouseLeave:Connect(function(x, y)
                 TweenService:Create(Toggle,TweenInfo.new(.25),{BackgroundColor3 = Color3.fromRGB(31,31,31)}):Play()               
                     end)
-
+                    function togglefunctions.Update(settings)
+                        settings = settings or {}
+                        local Title = tostring(settings.Title) or "Updated Togggle"
+                        ToggleText.Text = Title 
+                    end
+                    return togglefunctions
             end
             function CatElements.Dropdown(settings)
                 settings = settings or {}
@@ -773,6 +785,19 @@ Close.MouseButton1Click:Connect(function()
                 c:Destroy()
              end
         end)
+        function dropfunctions.Refresh(settings)
+            settings = settings or {}
+            local items = settings.Items or {}
+            for _,v in pairs(dropFrame:GetChildren()) do
+                if v.Name == "dropItem" then
+                    v:Destroy()
+                end
+            end
+            for i,v in pairs(items) do
+                newItem(v)
+            end
+        end
+        return dropfunctions
     end
     function CatElements.Slider(settings)
  
@@ -781,7 +806,7 @@ Close.MouseButton1Click:Connect(function()
         local min = settings.Min or 16
         local max = settings.Max or 500
         local callback = settings.Callback or function() end
-
+        local sliderfunctions = {}
         if not typeof(Title) == "string" then Title = "New Slider" end
         
 
@@ -907,7 +932,12 @@ Close.MouseButton1Click:Connect(function()
         end)
     end)
 
-
+function sliderfunctions.Update(settings)
+    settings = settings or {}
+    local Title = settings.Title or "Updated Slider"
+    SliderText.Text  = tostring(Title)
+end
+return sliderfunctions
                 end
                 function CatElements.Keybind(settings)
                     settings = settings or {}
@@ -915,6 +945,9 @@ Close.MouseButton1Click:Connect(function()
                     if not typeof(Title) == "string" then Title = "New Keybind" end 
                     local Callback = settings.Callback or function() end
                     local oldKey = settings.KeyCode.Name or Enum.KeyCode.F.Name
+                    local keyfunctions = {}
+
+
             local Keybind = Instance.new("Frame")
             local UICorner = Instance.new("UICorner")
             local KeybindText = Instance.new("TextLabel")
@@ -986,12 +1019,21 @@ Close.MouseButton1Click:Connect(function()
                     end
                 end
             end)
+            function keyfunctions.Update(settings)
+                settings = settings or {}
+                local Title = tostring(settings.Title) or "Updated Keybind"
+
+                KeybindText.Text = Title 
+                
+            end
+            return keyfunctions
                 end
                 function CatElements.Textbox(settings)
                     settings = settings or {}
                     local Title = settings.Title or "New Textbox"
                     local Callback = settings.Callback or function() end
                     local PlaceholderText = settings.PlaceholderText or ""
+                    local textboxfunctions
                     if not typeof(Title) == "string" then Title = "New Textbox" end 
 
             local Textbox = Instance.new("Frame")
@@ -1060,7 +1102,13 @@ Close.MouseButton1Click:Connect(function()
                         pcall(Callback,input.Text)
                         input.Text = ""
                     end
-            end)
+                    end)
+                    function textboxfunctions.Update(settings)
+                        settings = settings or {}
+                        local Title = tostring(settings.Title) or "Updated Textbox"
+                        KeybindText.Text = Title
+                    end
+                    return textboxfunctions
                 end
             return CatElements
     end
