@@ -209,7 +209,8 @@ Close.MouseButton1Click:Connect(function()
                 end
             end
             TweenService:Create(Backshadow,info,{ ImageTransparency = 1 }):Play()
-        local a=    TweenService:Create(Close,info,{ ImageTransparency = 1 }):Play()
+        local a=    TweenService:Create(Close,info,{ ImageTransparency = 1 })
+        a:Play()
     Pages:Destroy()
     a.Completed:Connect(function()
         task.wait(.2)
