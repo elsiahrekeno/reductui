@@ -1034,7 +1034,7 @@ return sliderfunctions
                     local Title = settings.Title or "New Textbox"
                     local Callback = settings.Callback or function() end
                     local PlaceholderText = settings.PlaceholderText or ""
-                    local textboxfunctions
+                    local textboxfunctions = {}
                     if not typeof(Title) == "string" then Title = "New Textbox" end 
 
             local Textbox = Instance.new("Frame")
