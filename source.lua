@@ -596,7 +596,7 @@ Close.MouseButton1Click:Connect(function()
 
             ToggleBack.Name = "ToggleBack"
             ToggleBack.Parent = Toggle
-            ToggleBack.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
+            ToggleBack.BackgroundColor3 = Color3.fromRGB(21, 21, 21)
             ToggleBack.Position = UDim2.new(0.925233543, 0, 0.205128223, 0)
             ToggleBack.Size = UDim2.new(0, 26, 0, 24)
             ToggleBack.Text = ""
@@ -630,7 +630,7 @@ Close.MouseButton1Click:Connect(function()
 
             local function UnToggle()
                 TweenService:Create(check,TweenInfo.new(.2),{ImageTransparency=1}):Play()
-                TweenService:Create(ToggleBack,TweenInfo.new(.2),{BackgroundColor3 = Color3.fromRGB(31, 31, 31)}):Play()        
+                TweenService:Create(ToggleBack,TweenInfo.new(.2),{BackgroundColor3 = Color3.fromRGB(21, 21, 21)}):Play()        
                 end
                 if Toggled == true then
                     Togglea()
@@ -679,7 +679,7 @@ Close.MouseButton1Click:Connect(function()
                     TweenService:Create(Toggle,TweenInfo.new(.25),{BackgroundColor3 = Color3.fromRGB(45,45,45)}):Play()               
                end)
                Toggle.MouseLeave:Connect(function(x, y)
-                TweenService:Create(Toggle,TweenInfo.new(.25),{BackgroundColor3 = Color3.fromRGB(31,31,31)}):Play()               
+                TweenService:Create(Toggle,TweenInfo.new(.25),{BackgroundColor3 = Color3.fromRGB(31, 31, 31)}):Play()               
                     end)
                     function togglefunctions.Update(settings)
                         settings = settings or {}
@@ -834,7 +834,7 @@ Close.MouseButton1Click:Connect(function()
             update()
         end)
        dropItem.MouseLeave:Connect(function(x, y)
-        TweenService:Create(dropItem,TweenInfo.new(.25),{BackgroundColor3 = Color3.fromRGB(31,31,31)}):Play()               
+        TweenService:Create(dropItem,TweenInfo.new(.25),{BackgroundColor3 = Color3.fromRGB(31, 31, 31)}):Play()               
         update()    
     end)
         end
@@ -1222,4 +1222,18 @@ return sliderfunctions
     end
     return Inside
 end
-return Lib
+
+local window = Lib.Window({
+    Title = "a"
+})
+local ca = window.Category({
+    Title = "test"
+})
+
+ca.Toggle({
+    Title = "a",
+    Default = false,
+    Callback = function(v)
+        print(v)
+    end
+})
