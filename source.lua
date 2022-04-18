@@ -768,7 +768,7 @@ Close.MouseButton1Click:Connect(function()
         UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
         UIListLayout.Padding = UDim.new(0, 5)
 
-        local function newItem(da)
+         function newItem(da)
             local dropItem = Instance.new("TextButton")
             local UICorner_2 = Instance.new("UICorner")
             local UIPadding = Instance.new("UIPadding")
@@ -848,7 +848,7 @@ Close.MouseButton1Click:Connect(function()
         TweenService:Create(dropOpen,TweenInfo.new(.25),{BackgroundColor3 = Color3.fromRGB(31,31,31)}):Play()               
         update()        
     end)
-        for _,v in pairs(items) do
+        for _,v in next, items do
             newItem(v)
         end
     
@@ -893,17 +893,17 @@ Close.MouseButton1Click:Connect(function()
              end
              update()
         end)
-        function dropfunctions.Refresh(settings)
-            settings = settings or {}
-            local items = settings.Items or {}
+        function dropfunctions.Refresh(a)
+            a = a or {}
+            if not a then a = {} end 
             for _,v in pairs(dropFrame:GetChildren()) do
-                if v.Name == "dropItem" then
-                    v:Destroy()
-                end
-            end
-            for i,v in pairs(items) do
-                newItem(v)
-            end
+                    if v.Name == "dropItem" then
+                        v:Destroy()
+                    end
+             end
+             for i,v in next, a do
+                 newItem(v)
+             end
         end
         return dropfunctions
     end
