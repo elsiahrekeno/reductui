@@ -596,7 +596,7 @@ Close.MouseButton1Click:Connect(function()
 
             ToggleBack.Name = "ToggleBack"
             ToggleBack.Parent = Toggle
-            ToggleBack.BackgroundColor3 = Color3.fromRGB(42, 42, 42)
+            ToggleBack.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
             ToggleBack.Position = UDim2.new(0.925233543, 0, 0.205128223, 0)
             ToggleBack.Size = UDim2.new(0, 26, 0, 24)
             ToggleBack.Text = ""
@@ -630,7 +630,7 @@ Close.MouseButton1Click:Connect(function()
 
             local function UnToggle()
                 TweenService:Create(check,TweenInfo.new(.2),{ImageTransparency=1}):Play()
-                TweenService:Create(ToggleBack,TweenInfo.new(.2),{BackgroundColor3 = Color3.fromRGB(42, 42, 42)}):Play()        
+                TweenService:Create(ToggleBack,TweenInfo.new(.2),{BackgroundColor3 = Color3.fromRGB(31, 31, 31)}):Play()        
                 end
                 if Toggled == true then
                     Togglea()
