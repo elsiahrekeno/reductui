@@ -187,6 +187,7 @@ Header.Parent = MotherFrame
 Header.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
 Header.Size = UDim2.new(0, 450, 0, 23)
 DraggingEnabled(Header,MotherFrame)
+
 Corner(Header,UDim.new(0,4))
 
 UIListLayout.Parent = Header
@@ -240,25 +241,16 @@ Cover.Parent = MotherFrame
 Cover.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 Cover.BorderSizePixel = 0
 Cover.Position = UDim2.new(0, 0, 0.0300395489, 0)
-Cover.Size = UDim2.new(0, 450, 0, 6)
+Cover.Size = UDim2.new(0, 45, 0, 6)
 Cover.ZIndex = 0
-
-Backshadow.Name = "Backshadow"
-Backshadow.Parent = MotherFrame
-Backshadow.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Backshadow.BackgroundTransparency = 1.000
-Backshadow.Position = UDim2.new(-0.0515554473, 0, -0.0530000441, 0)
-Backshadow.Size = UDim2.new(0, 498, 0, 609)
-Backshadow.Image = "rbxassetid://5028857084"
-Backshadow.ImageColor3 = Color3.fromRGB(0, 0, 0)
 
 TabContainer.Name = "TabContainer"
 TabContainer.Parent = MotherFrame
 TabContainer.Active = true
 TabContainer.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
 TabContainer.BorderSizePixel = 0
-TabContainer.Position = UDim2.new(0, 0, 0.105454542, 0)
-TabContainer.Size = UDim2.new(0, 450, 0, 29)
+TabContainer.Position = UDim2.new(0.001, 0, 0.106, 0)
+TabContainer.Size = UDim2.new(0, 450,0, 29)
 TabContainer.CanvasSize = UDim2.new(0, 0, 0.5, 0)
 TabContainer.ScrollingDirection=Enum.ScrollingDirection.X
 TabContainer.AutomaticCanvasSize = Enum.AutomaticSize.X
