@@ -328,12 +328,36 @@ Close.MouseButton1Click:Connect(function()
             Page.Position = UDim2.new(0, 0, 0.170909092, 0)
             Page.Size = UDim2.new(0, 450, 0, 456)
             Page.CanvasSize = UDim2.new(0, 0, 0.5, 0)
-            
+            Page.ScrollingDirection = Enum.ScrollingDirection.Y
+            Page.ScrollBarImageTransparency  = 1 
+             
+
+
             UIListLayout_3.Parent = Page
             UIListLayout_3.SortOrder = Enum.SortOrder.LayoutOrder
             UIListLayout_3.Padding = UDim.new(0, 6)
             UIListLayout_3.HorizontalAlignment=Enum.HorizontalAlignment.Center
 
+
+            function update()
+             local cS = UIListLayout_3.AbsoluteContentSize 
+            Page.CanvasSize = UDim2.new(0,cS.X,0,cS.Y + 10)
+            end
+            update()
+
+            Page.ChildAdded:Connect(function(child)
+                update()
+            end)
+            Page.ChildRemoved:Connect(function(child)
+                update()
+            end)
+
+            task.spawn(function()
+                while true do
+                wait()
+                update()
+            end
+        end)
             local oldITab = 0
             local oldIPage = 0
 
@@ -411,6 +435,7 @@ Close.MouseButton1Click:Connect(function()
                 return LabelFunctions
             end
             function CatElements.Button(settings)
+                update()
                 settings = settings or {}
                 local ButtonFunctions = {}
                 local Title = settings.Title or "New Button"
@@ -492,10 +517,12 @@ Close.MouseButton1Click:Connect(function()
             end)
            Button.MouseEnter:Connect(function(x, y)
                 TweenService:Create(Button,TweenInfo.new(.25),{BackgroundColor3 = Color3.fromRGB(45,45,45)}):Play()               
-           end)
+                update()
+            end)
            Button.MouseLeave:Connect(function(x, y)
             TweenService:Create(Button,TweenInfo.new(.25),{BackgroundColor3 = Color3.fromRGB(31,31,31)}):Play()               
-                end)
+            update()        
+        end)
 
                 function ButtonFunctions.Update(settings)
                     settings = settings or {}
@@ -574,7 +601,7 @@ Close.MouseButton1Click:Connect(function()
             ToggleBack.Size = UDim2.new(0, 26, 0, 24)
             ToggleBack.Text = ""
             ToggleBack.AutoButtonColor = false 
-
+            update()
             Corner(ToggleBack,UDim.new(0,4))
 
             check.Name = "check"
@@ -799,24 +826,28 @@ Close.MouseButton1Click:Connect(function()
             end
             c:Destroy()      
             pcall(callback,dropItem.Text)
-         
+            update()
         end)
 
         dropItem.MouseEnter:Connect(function(x, y)
             TweenService:Create(dropItem,TweenInfo.new(.25),{BackgroundColor3 = Color3.fromRGB(45,45,45)}):Play()               
-       end)
+            update()
+        end)
        dropItem.MouseLeave:Connect(function(x, y)
         TweenService:Create(dropItem,TweenInfo.new(.25),{BackgroundColor3 = Color3.fromRGB(31,31,31)}):Play()               
-            end)
+        update()    
+    end)
         end
 
         -- dropOpen
         dropOpen.MouseEnter:Connect(function(x, y)
             TweenService:Create(dropOpen,TweenInfo.new(.25),{BackgroundColor3 = Color3.fromRGB(45,45,45)}):Play()               
-       end)
+            update()
+        end)
        dropOpen.MouseLeave:Connect(function(x, y)
         TweenService:Create(dropOpen,TweenInfo.new(.25),{BackgroundColor3 = Color3.fromRGB(31,31,31)}):Play()               
-            end)
+        update()        
+    end)
         for _,v in pairs(items) do
             newItem(v)
         end
@@ -860,6 +891,7 @@ Close.MouseButton1Click:Connect(function()
                 end
                 c:Destroy()
              end
+             update()
         end)
         function dropfunctions.Refresh(settings)
             settings = settings or {}
