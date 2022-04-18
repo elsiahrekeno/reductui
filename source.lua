@@ -1,9 +1,54 @@
 local CoreGui,TweenService,Lib,Http,InsertedObjects = game:GetService('CoreGui'),game:GetService("TweenService"),{},game:GetService("HttpService"),{}
 local ms = game:GetService("Players").LocalPlayer:GetMouse()
-
+local debug = true 
 for _,v in pairs(CoreGui:GetChildren()) do
     if v:IsA("ScreenGui") and v.Name == "Library" then v:Destroy() end 
 end
+local udim2ToTable = function(udim2)
+    return {udim2.X.Scale, udim2.X.Offset, udim2.Y.Scale, udim2.Y.Offset}
+end
+
+local udim2FromTable = function(udim2)
+    return UDim2.new(udim2[1], udim2[2], udim2[3], udim2[4])
+end
+
+_G.Settings = {
+    Position = nil
+}
+function Check()
+    if writefile or appendfile or readfile or isfile or makefolder or delfolder or isfolder then
+        return true
+    else
+        return false
+    end
+end
+
+if Check() then
+    makefolder("./ReductUI/")
+else
+    print("Not supported")
+end
+local fname = "./ReductUI/settings.dat"
+function load()
+    if (Check() and isfile(fname)) then
+        _G.Settings = Http:JSONDecode(readfile(fname))
+    end
+end
+function save()
+    local json
+    if Check() then
+        json = Http:JSONEncode(_G.Settings)
+        writefile(fname, json)
+    else
+        print("Not supported")
+    end
+end
+
+load()
+save()
+
+
+
 function DraggingEnabled(frame, parent)
         
     parent = parent or frame
@@ -34,6 +79,8 @@ function DraggingEnabled(frame, parent)
         if input == dragInput and dragging then
             local delta = input.Position - mousePos
             parent.Position  = UDim2.new(framePos.X.Scale, framePos.X.Offset + delta.X, framePos.Y.Scale, framePos.Y.Offset + delta.Y)
+            _G.Settings.Position = udim2ToTable(parent.Position)
+            save()
         end
     end)
 end
@@ -64,11 +111,39 @@ function Constraint(parent,min,max)
     B.MaxTextSize = max
     table.insert(InsertedObjects,B.Name .. " | " ..  tostring(B.MinTextSize) .. " | " .. tostring(B.MaxTextSize) .. " | " .. B.Parent.Name)
 end
-
+function pause(wait)
+    local old = os.clock()
+    spawn(function()
+        while true do
+            if (os.clock() - old) >= wait then
+                break
+            end
+        end
+    end)
+end
 function Lib.Window(settings)
     settings = settings or {}
     local Title = settings.Title or "New Library"
     if not typeof(Title) == "string" then Title = "New Library" end
+ local SavePosition = settings.SavePosition 
+ if SavePosition == nil then
+    SavePosition = true 
+end
+if _G.Settings.Position == nil then
+    local pos = UDim2.new(.5, 0, 0.5, 0)
+    _G.Settings.Position = udim2ToTable(pos)
+    save()
+end
+
+if debug == false then
+    wait(1)
+    pause(.5)
+    wait(.2)
+    pause(.5)
+    wait(.2)
+    pause(.5)
+    wait(1)
+end
 
         local Library = Instance.new("ScreenGui")
         local MotherFrame = Instance.new("Frame")
@@ -96,6 +171,14 @@ MotherFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 MotherFrame.BackgroundColor3 = Color3.fromRGB(21, 21, 21)
 MotherFrame.Position = UDim2.new(0.502010703, 0, 0.503292203, 0)
 MotherFrame.Size = UDim2.new(0, 450, 0, 550)
+
+
+if SavePosition then 
+    MotherFrame.Position = udim2FromTable(_G.Settings.Position)
+else
+    MotherFrame.Position = UDim2.new(0.5,0,.5,0)
+end
+
 
 Corner(MotherFrame,UDim.new(0,4))
 
