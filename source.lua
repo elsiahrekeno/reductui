@@ -1222,18 +1222,4 @@ return sliderfunctions
     end
     return Inside
 end
-
-local window = Lib.Window({
-    Title = "a"
-})
-local ca = window.Category({
-    Title = "test"
-})
-
-ca.Toggle({
-    Title = "a",
-    Default = false,
-    Callback = function(v)
-        print(v)
-    end
-})
+return Lib
